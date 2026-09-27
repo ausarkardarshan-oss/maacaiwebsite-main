@@ -7,6 +7,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import ScrollProgress from './components/ScrollProgress';
 import BackToTop from './components/BackToTop';
+import CursorGlow from './components/CursorGlow';
 import Home from './pages/Home';
 import AboutPage from './pages/AboutPage';
 import ServicesPage from './pages/ServicesPage';
@@ -44,6 +45,7 @@ export default function App() {
 
   return (
     <>
+      <CursorGlow />
       <ScrollProgress />
       <Header />
       <Routes>
