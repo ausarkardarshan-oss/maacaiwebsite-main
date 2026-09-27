@@ -126,7 +126,7 @@ function TeamCard({ name, role, bio, img, initials, color, linkedin, twitter, on
   );
 }
 
-export default function About() {
+export default function About({ isHomePage = false }) {
   const [imgErrors, setImgErrors] = useState({});
 
   const handleImgError = (name) => {
@@ -137,6 +137,7 @@ export default function About() {
     <section id="about" className="about-page" aria-label="About Us">
 
       {/* Hero */}
+      {!isHomePage && (
       <div className="about-hero">
         <RevealWrapper variant="left" className="about-hero-content">
           <div className="about-eyebrow section-pill">OUR STORY</div>
@@ -179,8 +180,10 @@ export default function About() {
           </div>
         </RevealWrapper>
       </div>
+      )}
 
       {/* Stats */}
+      {!isHomePage && (
       <div className="about-stats-row">
         {STATS.map(({ icon, value, label }, idx) => (
           <RevealWrapper variant="up" delay={idx * 100} key={label} className="about-stat-item">
@@ -190,8 +193,10 @@ export default function About() {
           </RevealWrapper>
         ))}
       </div>
+      )}
 
       {/* Mission */}
+      {!isHomePage && (
       <RevealWrapper variant="up" className="about-mission">
         <div className="about-mission-inner">
           <div className="mission-tag">OUR MISSION</div>
@@ -229,8 +234,10 @@ export default function About() {
           </div>
         </div>
       </RevealWrapper>
+      )}
 
       {/* Values */}
+      {!isHomePage && (
       <div className="about-values">
         <div className="about-section-header">
           <div className="about-eyebrow center section-pill">OUR VALUES</div>
@@ -247,6 +254,7 @@ export default function About() {
           ))}
         </div>
       </div>
+      )}
 
       {/* Team */}
       <div className="about-team">
@@ -278,6 +286,7 @@ export default function About() {
       </div>
 
       {/* CTA Banner */}
+      {!isHomePage && (
       <div className="about-cta">
         <RevealWrapper variant="up" className="about-cta-inner">
           <div className="cta-left">
@@ -299,6 +308,7 @@ export default function About() {
           </div>
         </RevealWrapper>
       </div>
+      )}
 
     </section>
   );
