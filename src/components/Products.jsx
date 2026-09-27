@@ -9,16 +9,23 @@ export default function Products({ isHomePage = false }) {
 
   return (
     <section id="products" className={`section products ${!isHomePage ? 'about-page' : ''}`} aria-label="Featured Products">
-      {!isHomePage && (
-        <div style={{ width: '100%', marginBottom: '80px', marginTop: '20px' }}>
+      {!isHomePage ? (
+        <div className="page-hero-banner">
           <RevealWrapper variant="up">
             <img 
               src="/assets/images/products-hero-banner.png" 
               alt="Products Hero Banner" 
-              style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '24px' }} 
             />
           </RevealWrapper>
         </div>
+      ) : (
+        <RevealWrapper variant="up">
+          <div className="eyebrow section-pill">FEATURED PRODUCTS</div>
+          <h2>Our AI-Driven <em>Products</em></h2>
+          <p className="lead">
+            Innovative products designed to make everyday life and business smarter.
+          </p>
+        </RevealWrapper>
       )}
 
       <div className="products-container">
@@ -55,14 +62,11 @@ export default function Products({ isHomePage = false }) {
           </div>
         </RevealWrapper>
 
-        {/* Right Side: Future Products */}
         <div className="future-products-section">
           <RevealWrapper variant="right" className="future-header">
             <div className="future-top">
-              <span className="eyebrow section-pill" style={{ color: '#786dff' }}>FUTURE PRODUCTS</span>
-              <span className="concept-pill">10+ concepts</span>
+              <span className="eyebrow section-pill" style={{ color: '#4058ff', marginBottom: '20px' }}>OUR AI PRODUCTS</span>
             </div>
-            <h2>Intelligent products,<br/>ready to scale.</h2>
           </RevealWrapper>
 
           <RevealWrapper variant="up" delay={200} className="future-grid">

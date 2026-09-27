@@ -40,12 +40,11 @@ export default function Services({ isHomePage = false }) {
   return (
     <section id="services" className={`section services ${!isHomePage ? 'about-page' : ''}`} aria-label="What we do">
       {!isHomePage ? (
-        <div style={{ width: '100%', marginBottom: '80px', marginTop: '20px' }}>
+        <div className="page-hero-banner">
           <RevealWrapper variant="up">
             <img 
               src="/assets/images/services-hero-banner.jpg" 
               alt="Services Hero Banner" 
-              style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '24px' }} 
             />
           </RevealWrapper>
         </div>

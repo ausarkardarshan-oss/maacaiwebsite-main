@@ -2,19 +2,24 @@ import React, { useState } from 'react';
 import { industries } from '../data/industries';
 import RevealWrapper from './RevealWrapper';
 
+const INDUSTRY_COLORS = [
+  { bg: '#fff0f6', color: '#ee3b9a', border: '#f9e1ed', hover: '#fdf5f9' },
+  { bg: '#f5efff', color: '#7437ff', border: '#dce3f5', hover: '#f5f8ff' },
+  { bg: '#edfff3', color: '#14b95c', border: '#c9ebd8', hover: '#f2fcf6' },
+  { bg: '#fff8ec', color: '#f5a623', border: '#fde8b8', hover: '#fffbf0' },
+];
+
 export default function Industries({ openModal, isHomePage = false }) {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const selectedIndustry = industries[activeIndex] || industries[0];
+  const [hoveredIndex, setHoveredIndex] = useState(null);
 
   return (
     <section id="industries" className={`section industries-new ${!isHomePage ? 'about-page' : ''}`} aria-label="Industries we empower">
       {!isHomePage ? (
-        <div style={{ width: '100%', marginBottom: '80px', marginTop: '20px' }}>
+        <div className="page-hero-banner">
           <RevealWrapper variant="up">
             <img 
               src="/assets/images/industries-hero-banner.png" 
               alt="Industries Hero Banner" 
-              style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '24px' }} 
             />
           </RevealWrapper>
         </div>
@@ -30,49 +35,34 @@ export default function Industries({ openModal, isHomePage = false }) {
       )}
 
       <RevealWrapper variant="up" delay={200}>
-        <div className="industry-grid-layout">
-          <div className="industry-grid-list">
-            {industries.map(({ icon, name }, idx) => (
-              <button 
+        <div className="industry-cards-grid">
+          {industries.map(({ icon, name }, idx) => {
+            const palette = INDUSTRY_COLORS[idx % INDUSTRY_COLORS.length];
+            const isHovered = hoveredIndex === idx;
+            return (
+              <button
                 key={idx}
-                className={`industry-grid-btn ${idx === activeIndex ? 'active' : ''}`}
-                onClick={() => setActiveIndex(idx)}
-                aria-label={`Select ${name} industry`}
+                className="industry-card-new"
+                style={{
+                  '--ind-bg': palette.bg,
+                  '--ind-color': palette.color,
+                  '--ind-border': palette.border,
+                  '--ind-hover': palette.hover,
+                }}
+                onMouseEnter={() => setHoveredIndex(idx)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                onClick={() => openModal && openModal(name, `Learn more about our innovative ${name} solutions.`)}
+                aria-label={`Learn more about ${name}`}
               >
-                <div className="icon-box">
+                <div className="ind-card-icon">
                   <i aria-hidden="true">{icon}</i>
                 </div>
-                <span>{name}</span>
-                <span className="arrow">→</span>
+                <b className="ind-card-name">{name}</b>
+                <p className="ind-card-desc">Innovative AI solutions tailored for {name}.</p>
+                <span className="ind-card-arrow">→</span>
               </button>
-            ))}
-          </div>
-
-          <div className="industry-grid-panel">
-            <div className="panel-icon" data-color={activeIndex % 4}>
-              <i aria-hidden="true">{selectedIndustry.icon}</i>
-            </div>
-            <div className="eyebrow">SELECTED INDUSTRY</div>
-            <h3>{selectedIndustry.name}</h3>
-            <p>Learn more about our innovative {selectedIndustry.name} solutions.</p>
-            <button 
-              className="panel-link"
-              onClick={() => {
-                if (openModal) {
-                  openModal(selectedIndustry.name, `Learn more about our innovative ${selectedIndustry.name} solutions.`);
-                }
-              }}
-            >
-              Build for {selectedIndustry.name} <span>→</span>
-            </button>
-            <div className="industry-grid-bars" aria-hidden="true">
-              <div className="bar"></div>
-              <div className="bar"></div>
-              <div className="bar"></div>
-              <div className="bar"></div>
-              <div className="bar"></div>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </RevealWrapper>
     </section>

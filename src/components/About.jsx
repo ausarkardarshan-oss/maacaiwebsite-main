@@ -68,6 +68,16 @@ const TEAM = [
     linkedin: '#',
     twitter: '#',
   },
+  {
+    name: 'MD Akram Shaik',
+    role: 'Team Member',
+    bio: 'Passionate about building intuitive and impactful AI solutions for a smarter tomorrow.',
+    img: '/assets/images/team-akram.jpg',
+    initials: 'AS',
+    color: 'team-blue',
+    linkedin: '#',
+    twitter: '#',
+  },
 ];
 
 /** Value card with 3D tilt + shine */
@@ -302,9 +312,24 @@ export default function About({ isHomePage = false }) {
             <Button href="/services" variant="dark" showArrow>Explore Our Services</Button>
           </div>
           <div className="cta-right" aria-hidden="true">
-            <div className="cta-script-line">Ideas. Technology. Real Impact.</div>
-            <div className="cta-robot-visual">🤖🤝🙌</div>
-            <div className="cta-script-line small">A Smarter Tomorrow Together</div>
+            <div className="cta-right-badge">🚀 AI-Powered</div>
+            <div className="cta-service-pills">
+              {['Artificial Intelligence','Web Development','Automation','Cloud Solutions','UI/UX Design','Data Analytics'].map((s, i) => (
+                <span key={i} className="cta-service-pill">{s}</span>
+              ))}
+            </div>
+            <div className="cta-right-stat-row">
+              <div className="cta-stat">
+                <b>50+</b><small>Projects Done</small>
+              </div>
+              <div className="cta-stat">
+                <b>20+</b><small>Clients Served</small>
+              </div>
+              <div className="cta-stat">
+                <b>3+</b><small>Years of Innovation</small>
+              </div>
+            </div>
+            <div className="cta-right-tagline">Ideas. Technology. Real Impact.</div>
           </div>
         </RevealWrapper>
       </div>
