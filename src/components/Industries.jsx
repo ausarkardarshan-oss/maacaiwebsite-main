@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { industries } from '../data/industries';
 import RevealWrapper from './RevealWrapper';
+import useTilt from '../hooks/useTilt';
 
 const INDUSTRY_COLORS = [
   { bg: '#fff0f6', color: '#ee3b9a', border: '#f9e1ed', hover: '#fdf5f9' },
@@ -9,9 +10,36 @@ const INDUSTRY_COLORS = [
   { bg: '#fff8ec', color: '#f5a623', border: '#fde8b8', hover: '#fffbf0' },
 ];
 
-export default function Industries({ openModal, isHomePage = false }) {
-  const [hoveredIndex, setHoveredIndex] = useState(null);
+function IndustryCard({ name, icon, palette, idx, openModal }) {
+  const { ref, onMouseMove, onMouseLeave } = useTilt({ max: 10, scale: 1.03, speed: 320 });
 
+  return (
+    <button
+      ref={ref}
+      className="industry-card-new"
+      style={{
+        '--ind-bg': palette.bg,
+        '--ind-color': palette.color,
+        '--ind-border': palette.border,
+        '--ind-hover': palette.hover,
+      }}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+      onClick={() => openModal && openModal(name, `Learn more about our innovative ${name} solutions.`)}
+      aria-label={`Learn more about ${name}`}
+    >
+      <span className="tilt-shine" aria-hidden="true" />
+      <div className="ind-card-icon">
+        <i aria-hidden="true">{icon}</i>
+      </div>
+      <b className="ind-card-name">{name}</b>
+      <p className="ind-card-desc">Innovative AI solutions tailored for {name}.</p>
+      <span className="ind-card-arrow">→</span>
+    </button>
+  );
+}
+
+export default function Industries({ openModal, isHomePage = false }) {
   return (
     <section id="industries" className={`section industries-new ${!isHomePage ? 'about-page' : ''}`} aria-label="Industries we empower">
       {!isHomePage ? (
@@ -36,33 +64,16 @@ export default function Industries({ openModal, isHomePage = false }) {
 
       <RevealWrapper variant="up" delay={200}>
         <div className="industry-cards-grid">
-          {industries.map(({ icon, name }, idx) => {
-            const palette = INDUSTRY_COLORS[idx % INDUSTRY_COLORS.length];
-            const isHovered = hoveredIndex === idx;
-            return (
-              <button
-                key={idx}
-                className="industry-card-new"
-                style={{
-                  '--ind-bg': palette.bg,
-                  '--ind-color': palette.color,
-                  '--ind-border': palette.border,
-                  '--ind-hover': palette.hover,
-                }}
-                onMouseEnter={() => setHoveredIndex(idx)}
-                onMouseLeave={() => setHoveredIndex(null)}
-                onClick={() => openModal && openModal(name, `Learn more about our innovative ${name} solutions.`)}
-                aria-label={`Learn more about ${name}`}
-              >
-                <div className="ind-card-icon">
-                  <i aria-hidden="true">{icon}</i>
-                </div>
-                <b className="ind-card-name">{name}</b>
-                <p className="ind-card-desc">Innovative AI solutions tailored for {name}.</p>
-                <span className="ind-card-arrow">→</span>
-              </button>
-            );
-          })}
+          {industries.map(({ icon, name }, idx) => (
+            <IndustryCard 
+              key={idx} 
+              name={name} 
+              icon={icon} 
+              palette={INDUSTRY_COLORS[idx % INDUSTRY_COLORS.length]} 
+              idx={idx} 
+              openModal={openModal} 
+            />
+          ))}
         </div>
       </RevealWrapper>
     </section>
